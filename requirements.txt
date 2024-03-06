@@ -1,0 +1,4 @@
+PyODF2
+colorama
+python-docx
+googletrans
