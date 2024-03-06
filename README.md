@@ -4,6 +4,6 @@ This repo allows you to select a folder with .pdf documents and convert them to 
 
 ## Requirements
 * [pypdf2 >= 3.0.1](https://pypi.org/project/PyPDF2/)
-* [coloram >= 0.4.6](https://pypi.org/project/colorama/)
+* [colorama >= 0.4.6](https://pypi.org/project/colorama/)
 * [python-docx >= 1.1.0](https://pypi.org/project/python-docx/)
 * [googletrans >= 3.1.0a0](https://pypi.org/project/googletrans/) 
