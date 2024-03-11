@@ -13,7 +13,7 @@ MainWidget:
                 text: "Input format"
             BoxLayout:
                 Spinner:
-                    values: "pdf", "txt", "docx"
+                    values: ".pdf", ".txt", ".docx"
                     size_hint_y: 0.5
                     pos_hint: {"center_y": 0.5}
                     on_text: root.on_input_format_spinner(self.text)
@@ -21,21 +21,38 @@ MainWidget:
                 text: "Output format"
             BoxLayout
                 Spinner:
-                    values: "pdf", "txt", "docx"
+                    values: ".txt", ".docx"
                     size_hint_y: 0.5
                     pos_hint: {"center_y": 0.5}
                     on_text: root.on_output_format_spinner(self.text)
         GridLayout:
-            rows: 2
+            rows: 3
             cols: 2
+            Label:
+                text: "Convert"
+            CheckBox:
+                group: "function"
+                #active: True
+                allow_no_selection: False
+                id: radiobutton1
+                num: 1
+                on_active: root.on_radiobutton(self.num) if self.active else None
             Label:
                 text: "Merge"
             CheckBox:
-                on_active: root.on_merge_checkbox_click(self.active)
+                group: "function"
+                allow_no_selection: False
+                id: radiobutton2
+                num: 2
+                on_active: root.on_radiobutton(self.num) if self.active else None
             Label:
                 text: "Translate"
             CheckBox:
-                on_active: root.on_translate_checkbox_click(self.active)
+                group: "function"
+                allow_no_selection: False
+                id: radiobutton3
+                num: 3
+                on_active: root.on_radiobutton(self.num) if self.active else None
         GridLayout:
             rows: 2
             cols: 1
