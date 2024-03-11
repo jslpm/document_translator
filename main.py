@@ -9,6 +9,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
+from kivy.uix.spinner import Spinner
+from kivy.uix.label import Label
 from Processor import Processor
 
 
@@ -25,10 +27,9 @@ class MainWidget(BoxLayout):
     
     input_format = StringProperty("")
     output_format = StringProperty("")
-    is_merge_active = BooleanProperty(False)
-    is_translate_active = BooleanProperty(False)
-    input_folder_path = StringProperty("Select folder")
-    output_folder_path = StringProperty("Select folder")
+    function_type = StringProperty("")
+    input_folder_path = StringProperty("")
+    output_folder_path = StringProperty("")
     input_language = StringProperty("")
     output_language = StringProperty("")
     vars_dict = dict()
@@ -41,21 +42,19 @@ class MainWidget(BoxLayout):
         # Add gui variables to a dictionary
         self.vars_dict.update({'if': self.input_format})
         self.vars_dict.update({'of': self.output_format})
-        self.vars_dict.update({'ima': self.is_merge_active})
-        self.vars_dict.update({'ita': self.is_translate_active})
+        self.vars_dict.update({'ft': self.function_type})
         self.vars_dict.update({'ifp': self.input_folder_path})
         self.vars_dict.update({'ofp': self.output_folder_path})
         self.vars_dict.update({'il': self.input_language})
         self.vars_dict.update({'ol': self.output_language})
 
         # Validate entered data by user
-        is_correct = self.processor.validate(self.vars_dict)
+        is_correct, message = self.processor.validate(self.vars_dict)
         if is_correct is True:
-            print("Do tasks")
             self.processor.process()
         else:
             # print("Cannot realize operation.")
-            self.load_error_dialog("Cannot realize operation.")
+            self.load_error_dialog(f"Cannot realize operation. {message}")
 
     def load_error_dialog(self, message):
         content = ErrorDialog(cancel=self.dismiss_popup, message=message)
@@ -88,13 +87,16 @@ class MainWidget(BoxLayout):
         self.output_format = text
         # print(text)
 
-    def on_merge_checkbox_click(self, is_active):
-        self.is_merge_active = is_active
-        # print(is_active)
-
-    def on_translate_checkbox_click(self, is_active):
-        self.is_translate_active = is_active
-        # print(is_active)
+    def on_radiobutton(self, radiobutton_idx):
+        if radiobutton_idx == 1:
+            self.function_type = 'convert'
+        elif radiobutton_idx == 2:
+            self.function_type = 'merge'
+        elif radiobutton_idx == 3:
+            self.function_type = 'translate'
+        else:
+            self.function_type = ''
+        # print(radiobutton_idx, type(radiobutton_idx))
 
     def on_from_lang_spinner(self, text):
         self.input_language = text
@@ -104,7 +106,7 @@ class MainWidget(BoxLayout):
         self.output_language = text
         # print(text)
 
-class TheLabApp(App):
+class DocumentTranslatorApp(App):
     pass
 
-TheLabApp().run()
+DocumentTranslatorApp().run()
